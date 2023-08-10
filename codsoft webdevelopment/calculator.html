@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Basic Calculator</title>
+  <style>
+    body {
+      font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .calculator {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 5px;
+      max-width: 300px;
+      background-color: #fff;
+      border: 1px solid #090808;
+      padding: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .display {
+      grid-column: span 4;
+      text-align: right;
+      padding: 5px;
+    }
+
+    .btn {
+      padding: 10px;
+      font-size: 1.2rem;
+      text-align: center;
+      cursor: pointer;
+      background-color: #ff9500;
+      border: 1px solid #ccc;
+      border-radius: 50%;
+      color: #f2f2f2;
+    }
+
+    .btn:hover {
+      background-color: #e0e0e0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="calculator">
+    <div class="display">
+      <input type="text" id="display-screen" disabled>
+    </div>
+    <button class="btn" id="clear">C</button>
+    <button class="btn" id="backspace">&#9003;</button>
+    <button class="btn" id="equals">=</button>
+    <button class="btn" id="divide">/</button>
+    <button class="btn" id="seven">7</button>
+    <button class="btn" id="eight">8</button>
+    <button class="btn" id="nine">9</button>
+    <button class="btn" id="multiply">*</button>
+    <button class="btn" id="four">4</button>
+    <button class="btn" id="five">5</button>
+    <button class="btn" id="six">6</button>
+    <button class="btn" id="subtract">-</button>
+    <button class="btn" id="one">1</button>
+    <button class="btn" id="two">2</button>
+    <button class="btn" id="three">3</button>
+    <button class="btn" id="add">+</button>
+    <button class="btn" id="decimal">.</button>
+    <button class="btn" id="zero">0</button>
+  </div>
+  <script>
+    function updateDisplay(value) {
+      document.getElementById('display-screen').value = value;
+    }
+
+    function clearDisplay() {
+      updateDisplay('');
+    }
+    function calculate() {
+      let expression = document.getElementById('display-screen').value;
+      let result = eval(expression);
+      updateDisplay(result);
+    }
+
+    document.getElementById('clear').addEventListener('click', clearDisplay);
+    document.getElementById('backspace').addEventListener('click', function () {
+      let expression = document.getElementById('display-screen').value;
+      updateDisplay(expression.slice(0, -1));
+    });
+    document.getElementById('equals').addEventListener('click', calculate);
+    const buttons = document.querySelectorAll('.btn:not(#clear, #backspace, #equals)');
+    buttons.forEach((button) => {
+      button.addEventListener('click', function () {
+        const currentValue = document.getElementById('display-screen').value;
+        const clickedValue = this.textContent;
+        updateDisplay(currentValue + clickedValue);
+      });
+    });
+  </script>
+</body>
+
+</html>
